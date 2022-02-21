@@ -16,7 +16,7 @@ namespace TheGame
         public void Start()
         {
             myWorld = new World();
-            player = new Player(1,1);
+            player = new Player(10,10);
             //renderManager = new RenderManager();
 
             RunGameLoop();

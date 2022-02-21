@@ -9,11 +9,11 @@ namespace TheGame
 {
     public class World
     {
-        string[,] Grid;
+        string[,,] Grid;
         int Rows;
         int Cols;
 
-        public World(string[,] grid)
+        public World(string[,,] grid)
         {
             Grid = grid;
             Rows = Grid.GetLength(0);
@@ -22,19 +22,33 @@ namespace TheGame
 
         public World()
         {
-            Grid = ImportMap();
+            Grid = ImportMaps();
             Rows = Grid.GetLength(0);
             Cols = Grid.GetLength(1);
         }
 
         public void Draw()
         {
-            Grid = ImportMap();
+            Grid = ImportMaps();
             for (int y = 0; y < Rows; y++)
             {
                 for (int x = 0; x < Cols; x++)
                 {
-                    Console.Write(Grid[y,x]);
+                    string element = GetElement(x, y, 1);
+                    switch (element)
+                    {
+                        case "R":
+                            Console.BackgroundColor = ConsoleColor.Red;
+                            break;
+                        case "G":
+                            Console.BackgroundColor = ConsoleColor.Green;
+                            break;
+                        case "B":
+                            Console.BackgroundColor = ConsoleColor.Blue;
+                            break;
+                    }
+                    Console.Write(Grid[y,x,0]);
+                    Console.ResetColor();
                 }
                 Console.WriteLine();
             }
@@ -60,9 +74,32 @@ namespace TheGame
             return grid;
         }
 
-        public string GetElement(int x, int y)
+        private string[,,] ImportMaps()
         {
-            return Grid[y,x];
+            string path = "C:\\development\\BigProject\\TheGame\\TheGame\\Maps";
+            string first = File.ReadAllLines(Directory.GetFiles(path)[0])[0];
+            int rows = File.ReadAllLines(Directory.GetFiles(path)[0]).Length;
+            int cols = first.Length;
+
+            string[,,] grids = new string[rows, cols, 3];
+
+            for (int d = 0; d < Directory.GetFiles(path).Count(); d++)
+            {
+                for (int y = 0; y < rows; y++)
+                {
+                    string line = File.ReadAllLines(Directory.GetFiles(path)[d])[y];
+                    for (int x = 0; x < cols; x++)
+                    {
+                        grids[y, x, d] = line[x].ToString();
+                    }
+                }
+            }
+            return grids;
+        }
+
+        public string GetElement(int x, int y,int d)
+        {
+            return Grid[y,x,d];
         }
 
         public int GridSizeX()
@@ -81,7 +118,7 @@ namespace TheGame
                 return false;
             }
 
-            return Grid[y, x] == " ";  
+            return Grid[y, x,0] == " ";  
         }
     }
 }

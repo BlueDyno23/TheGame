@@ -37,14 +37,14 @@ namespace TheGame
                     string element = GetElement(x, y, 1);
                     switch (element)
                     {
-                        case "R":
-                            Console.BackgroundColor = ConsoleColor.Red;
-                            break;
-                        case "G":
+                        case "1":
                             Console.BackgroundColor = ConsoleColor.Green;
                             break;
-                        case "B":
-                            Console.BackgroundColor = ConsoleColor.Blue;
+                        case "2":
+                            Console.BackgroundColor = ConsoleColor.DarkGreen;
+                            break;
+                        case "3":
+                            Console.BackgroundColor = ConsoleColor.DarkYellow;
                             break;
                     }
                     Console.Write(Grid[y,x,0]);

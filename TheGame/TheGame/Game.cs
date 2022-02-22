@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using System.Drawing;
 using Console = Colorful.Console;
+using System.Drawing;
 
 namespace TheGame
 {
@@ -26,17 +26,22 @@ namespace TheGame
 
         private void AdvancedPlayerDraw()
         {
-            
             for (int y = 0; y < myWorld.GridSize()[0]; y++)
             {
                 for (int x = 0; x < myWorld.GridSize()[1]; x++)
                 {
-                    if(y == player.Y && x == player.X)
+                    if (y == player.Y && x == player.X)
                     {
                         player.Draw();
                         Console.SetCursorPosition(player.lastX, player.lastY);
-                        Console.BackgroundColor = Color.FromArgb(myWorld.GetColor()[0],myWorld.GetColor()[1],myWorld.GetColor()[2]);
+                        Console.BackgroundColor = Color.FromArgb(myWorld.GetColors(x, y)[0], myWorld.GetColors(x, y)[1], myWorld.GetColors(x, y)[2]);
                         Console.Write(" ");
+
+                        Console.ResetColor();
+                        System.Console.ResetColor();
+
+                        Console.SetCursorPosition(0, 40);
+                        Console.WriteLine($"R:{myWorld.GetColors(x,y)[0]}\tG:{myWorld.GetColors(x, y)[1]}\tB:{myWorld.GetColors(x, y)[2]}");
                     }
                 }
             }
@@ -49,12 +54,12 @@ namespace TheGame
                 for (int x = 0; x < myWorld.ActiveGridSize()[1]; x++)
                 {
 
+                    Console.SetCursorPosition(0, 40);
+                    Console.WriteLine($"CX:{player.X}\tCY:{player.Y}\nLX:{player.lastX}\tLY:{player.lastY}");
+
                 }
             }
         }
-
-        
-
         private void DrawFrame()
         {
             Console.Clear();
@@ -118,9 +123,7 @@ namespace TheGame
 
         private void RunGameLoop()
         {
-
-            myWorld.Draw(4, 3, 27, 14);
-
+            myWorld.Draw();
             while (true)
             {
                 if(HandlePlayerInput())

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Colorful;
 using System.Drawing;
+using Console = Colorful.Console;
 
 namespace TheGame
 {
@@ -52,13 +53,11 @@ namespace TheGame
                     {
                         g = g / 10;
                         g = g * 255;
-                        
                     }
                     if (double.TryParse(blueElement, out b))
                     {
                         b = b / 10;
                         b = b * 255;
-
                     }
 
                     if (r != 0 || g != 0 || b != 0)
@@ -66,10 +65,10 @@ namespace TheGame
                         Colorful.Console.BackgroundColor = Color.FromArgb((int)r, (int)g, (int)b);
                     }
 
-                    Colorful.Console.Write(Grid[y, x, 0]);
-                    Colorful.Console.ResetColor();
+                    Console.Write(Grid[y, x, 0]);
+                    Console.ResetColor();
                 }
-                System.Console.WriteLine();
+                Console.WriteLine();
             }
         }
 
@@ -91,7 +90,6 @@ namespace TheGame
                     {
                         r = r / 10;
                         r = r * 255;
-
                     }
                     if (double.TryParse(greenElement, out g))
                     {
@@ -138,6 +136,7 @@ namespace TheGame
 
             return grid;
         }
+
         private string[,,] ImportMaps()
         {
             string path = "C:\\development\\BigProject\\TheGame\\TheGame\\Maps";
@@ -182,8 +181,31 @@ namespace TheGame
             return size;
         }
 
-        public int[] GetColor()
+        public int[] GetColors(int x, int y)
         {
+
+            string redElement = GetElement(x, y, 1);
+            string greenElement = GetElement(x, y, 2);
+            string blueElement = GetElement(x, y, 3);
+
+
+            double.TryParse(redElement, out r);
+            r = r / 10;
+            r = r * 255;
+
+
+
+            double.TryParse(greenElement, out g);
+            g = g / 10;
+            g = g * 255;
+
+
+            double.TryParse(blueElement, out b);
+            b = b / 10;
+            b = b * 255;
+
+
+
             int[] colors = { (int)r, (int)g, (int)b };
             return colors;
         }

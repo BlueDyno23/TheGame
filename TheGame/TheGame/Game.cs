@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Drawing;
+using Console = Colorful.Console;
 
 namespace TheGame
 {
@@ -22,21 +24,31 @@ namespace TheGame
             RunGameLoop();
         }
 
-        private void AdvancedDraw()
+        private void AdvancedPlayerDraw()
         {
-            for (int y = 0; y < myWorld.GridSizeY(); y++)
+            
+            for (int y = 0; y < myWorld.GridSize()[0]; y++)
             {
-                for (int x = 0; x < myWorld.GridSizeX(); x++)
+                for (int x = 0; x < myWorld.GridSize()[1]; x++)
                 {
                     if(y == player.Y && x == player.X)
                     {
                         player.Draw();
                         Console.SetCursorPosition(player.lastX, player.lastY);
+                        Console.BackgroundColor = Color.FromArgb(myWorld.GetColor()[0],myWorld.GetColor()[1],myWorld.GetColor()[2]);
                         Console.Write(" ");
-
-                        Console.SetCursorPosition(0, 40);
-                        Console.WriteLine($"CX:{player.X}\tCY:{player.Y}\nLX:{player.lastX}\tLY:{player.lastY}");
                     }
+                }
+            }
+        }
+
+        private void AdvancedMapDraw()
+        {
+            for (int y = 0; y < myWorld.ActiveGridSize()[0]; y++)
+            {
+                for (int x = 0; x < myWorld.ActiveGridSize()[1]; x++)
+                {
+
                 }
             }
         }
@@ -106,12 +118,14 @@ namespace TheGame
 
         private void RunGameLoop()
         {
-            myWorld.Draw();
+
+            myWorld.Draw(4, 3, 27, 14);
+
             while (true)
             {
                 if(HandlePlayerInput())
                 {
-                    AdvancedDraw();
+                    AdvancedPlayerDraw();
                 }
             }
             

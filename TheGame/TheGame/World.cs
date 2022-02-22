@@ -4,14 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Colorful;
+using System.Drawing;
 
 namespace TheGame
 {
     public class World
     {
         string[,,] Grid;
+        string[,,] activeGrid;
         int Rows;
         int Cols;
+        private double r, g, b;
 
         public World(string[,,] grid)
         {
@@ -34,23 +38,84 @@ namespace TheGame
             {
                 for (int x = 0; x < Cols; x++)
                 {
-                    string element = GetElement(x, y, 1);
-                    switch (element)
+                    string redElement = GetElement(x, y, 1);
+                    string greenElement = GetElement(x, y, 2);
+                    string blueElement = GetElement(x, y, 3);
+
+                    if (double.TryParse(redElement, out r))
                     {
-                        case "1":
-                            Console.BackgroundColor = ConsoleColor.Green;
-                            break;
-                        case "2":
-                            Console.BackgroundColor = ConsoleColor.DarkGreen;
-                            break;
-                        case "3":
-                            Console.BackgroundColor = ConsoleColor.DarkYellow;
-                            break;
+                        r = r / 10;
+                        r = r * 255;
+                        
                     }
-                    Console.Write(Grid[y,x,0]);
-                    Console.ResetColor();
+                    if (double.TryParse(greenElement, out g))
+                    {
+                        g = g / 10;
+                        g = g * 255;
+                        
+                    }
+                    if (double.TryParse(blueElement, out b))
+                    {
+                        b = b / 10;
+                        b = b * 255;
+
+                    }
+
+                    if (r != 0 || g != 0 || b != 0)
+                    {
+                        Colorful.Console.BackgroundColor = Color.FromArgb((int)r, (int)g, (int)b);
+                    }
+
+                    Colorful.Console.Write(Grid[y, x, 0]);
+                    Colorful.Console.ResetColor();
                 }
-                Console.WriteLine();
+                System.Console.WriteLine();
+            }
+        }
+
+        public void Draw(int x1, int y1,int x2, int y2)
+        {
+            Grid = ImportMaps();
+
+            activeGrid = new string[(y2 - y1), (x2 - x1),4];
+
+            for (int y = y1; y < (y2-y1); y++)
+            {
+                for (int x = x1; x < (x2-x1); x++)
+                {
+                    string redElement = GetElement(x, y, 1);
+                    string greenElement = GetElement(x, y, 2);
+                    string blueElement = GetElement(x, y, 3);
+
+                    if (double.TryParse(redElement, out r))
+                    {
+                        r = r / 10;
+                        r = r * 255;
+
+                    }
+                    if (double.TryParse(greenElement, out g))
+                    {
+                        g = g / 10;
+                        g = g * 255;
+
+                    }
+                    if (double.TryParse(blueElement, out b))
+                    {
+                        b = b / 10;
+                        b = b * 255;
+
+                    }
+
+                    if (r != 0 || g != 0 || b != 0)
+                    {
+                        Colorful.Console.BackgroundColor = Color.FromArgb((int)r, (int)g, (int)b);
+                    }
+
+                    activeGrid[y, x,0] = Grid[y,x,0];
+                    Colorful.Console.Write(activeGrid[y, x, 0]);
+                    Colorful.Console.ResetColor();
+                }
+                System.Console.WriteLine();
             }
         }
 
@@ -73,7 +138,6 @@ namespace TheGame
 
             return grid;
         }
-
         private string[,,] ImportMaps()
         {
             string path = "C:\\development\\BigProject\\TheGame\\TheGame\\Maps";
@@ -81,7 +145,7 @@ namespace TheGame
             int rows = File.ReadAllLines(Directory.GetFiles(path)[0]).Length;
             int cols = first.Length;
 
-            string[,,] grids = new string[rows, cols, 3];
+            string[,,] grids = new string[rows, cols, 4];
 
             for (int d = 0; d < Directory.GetFiles(path).Count(); d++)
             {
@@ -101,14 +165,27 @@ namespace TheGame
         {
             return Grid[y,x,d];
         }
-
-        public int GridSizeX()
+        public string GetActiveElement(int x, int y, int d)
         {
-            return Cols;
+            return activeGrid[y, x, d];
         }
-        public int GridSizeY()
+
+        public int[] GridSize()
         {
-            return Rows;
+            int[] size = { Rows, Cols };
+            return size;
+        }
+
+        public int[] ActiveGridSize()
+        {
+            int[] size = { activeGrid.GetLength(0),activeGrid.GetLength(1) };
+            return size;
+        }
+
+        public int[] GetColor()
+        {
+            int[] colors = { (int)r, (int)g, (int)b };
+            return colors;
         }
 
         public bool isNonCollidable(int x, int y)

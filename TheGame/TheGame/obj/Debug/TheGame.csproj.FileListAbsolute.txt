@@ -5,3 +5,5 @@ C:\development\BigProject\TheGame\TheGame\obj\Debug\TheGame.csproj.AssemblyRefer
 C:\development\BigProject\TheGame\TheGame\obj\Debug\TheGame.csproj.CoreCompileInputs.cache
 C:\development\BigProject\TheGame\TheGame\obj\Debug\TheGame.exe
 C:\development\BigProject\TheGame\TheGame\obj\Debug\TheGame.pdb
+C:\development\BigProject\TheGame\TheGame\bin\Debug\Colorful.Console.dll
+C:\development\BigProject\TheGame\TheGame\obj\Debug\TheGame.csproj.CopyComplete

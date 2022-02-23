@@ -86,32 +86,30 @@ namespace TheGame
                     string greenElement = GetElement(x, y, 2);
                     string blueElement = GetElement(x, y, 3);
 
-                    if (double.TryParse(redElement, out r))
-                    {
-                        r = r / 10;
-                        r = r * 255;
-                    }
-                    if (double.TryParse(greenElement, out g))
-                    {
-                        g = g / 10;
-                        g = g * 255;
 
-                    }
-                    if (double.TryParse(blueElement, out b))
-                    {
-                        b = b / 10;
-                        b = b * 255;
+                    double.TryParse(redElement, out r);
+                    r = r / 10;
+                    r = r * 255;
 
-                    }
+
+
+                    double.TryParse(greenElement, out g);
+                    g = g / 10;
+                    g = g * 255;
+
+
+                    double.TryParse(blueElement, out b);
+                    b = b / 10;
+                    b = b * 255;
 
                     if (r != 0 || g != 0 || b != 0)
                     {
-                        Colorful.Console.BackgroundColor = Color.FromArgb((int)r, (int)g, (int)b);
+                        Console.BackgroundColor = Color.FromArgb((int)r, (int)g, (int)b);
                     }
 
                     activeGrid[y, x,0] = Grid[y,x,0];
-                    Colorful.Console.Write(activeGrid[y, x, 0]);
-                    Colorful.Console.ResetColor();
+                    Console.Write(activeGrid[y, x, 0]);
+                    Console.ResetColor();
                 }
                 System.Console.WriteLine();
             }
@@ -139,7 +137,7 @@ namespace TheGame
 
         private string[,,] ImportMaps()
         {
-            string path = "C:\\development\\BigProject\\TheGame\\TheGame\\Maps";
+            string path = $"{Directory.GetCurrentDirectory()}\\Maps";
             string first = File.ReadAllLines(Directory.GetFiles(path)[0])[0];
             int rows = File.ReadAllLines(Directory.GetFiles(path)[0]).Length;
             int cols = first.Length;

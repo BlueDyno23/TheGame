@@ -1,0 +1,9 @@
+C:\development\BigProject\TheGame\TheGame\bin\Release\TheGame.exe.config
+C:\development\BigProject\TheGame\TheGame\bin\Release\TheGame.exe
+C:\development\BigProject\TheGame\TheGame\bin\Release\TheGame.pdb
+C:\development\BigProject\TheGame\TheGame\bin\Release\Colorful.Console.dll
+C:\development\BigProject\TheGame\TheGame\obj\Release\TheGame.csproj.AssemblyReference.cache
+C:\development\BigProject\TheGame\TheGame\obj\Release\TheGame.csproj.CoreCompileInputs.cache
+C:\development\BigProject\TheGame\TheGame\obj\Release\TheGame.csproj.CopyComplete
+C:\development\BigProject\TheGame\TheGame\obj\Release\TheGame.exe
+C:\development\BigProject\TheGame\TheGame\obj\Release\TheGame.pdb

@@ -26,22 +26,52 @@ namespace TheGame
 
         private void AdvancedPlayerDraw()
         {
+            
             for (int y = 0; y < myWorld.GridSize()[0]; y++)
             {
                 for (int x = 0; x < myWorld.GridSize()[1]; x++)
                 {
+                    
+                    /* reminder: everything in there only executes when the player walks on the block
+                      this function only draws the player and fixes player related drawing bugs
+                      this function DOES NOT DRAW THE MAP (although it could)
+                    */
                     if (y == player.Y && x == player.X)
                     {
-                        player.Draw();
+                        //getting the color
+                        Color color = Color.FromArgb(myWorld.GetColors(x, y)[0], myWorld.GetColors(x, y)[1], myWorld.GetColors(x, y)[2]);
+                        Color lastColor = Color.FromArgb(myWorld.GetColors(player.lastX, player.lastY)[0], myWorld.GetColors(player.lastX, player.lastY)[1], myWorld.GetColors(player.lastX, player.lastY)[2]);
+
+                        //drawing the player
+                        Console.SetCursorPosition(x, y);
+                        player.Draw(color);
+
+                        //resetting player's trail
                         Console.SetCursorPosition(player.lastX, player.lastY);
-                        Console.BackgroundColor = Color.FromArgb(myWorld.GetColors(x, y)[0], myWorld.GetColors(x, y)[1], myWorld.GetColors(x, y)[2]);
+                        Console.BackgroundColor = lastColor;
                         Console.Write(" ");
 
+                        //resetting the colors in the background
+                        Console.SetCursorPosition(x,y);
+                        Console.BackgroundColor = color;
+
+                        //making double sure that the colors are reset to not affect the entire screen
                         Console.ResetColor();
                         System.Console.ResetColor();
 
+                        //debug
                         Console.SetCursorPosition(0, 40);
+                        Console.ForegroundColor = Color.FromArgb(35,35,35);
+
+                        Console.WriteLine("DEBUG INFO:\n");
                         Console.WriteLine($"R:{myWorld.GetColors(x,y)[0]}\tG:{myWorld.GetColors(x, y)[1]}\tB:{myWorld.GetColors(x, y)[2]}");
+                        Console.WriteLine($"X: {player.X}\tY:{player.Y}");
+                        Console.WriteLine($"PATH: {Directory.GetCurrentDirectory()}");
+                        Console.WriteLine($"WINDOW HEIGHT: {Console.WindowHeight}");
+                        Console.WriteLine($"WINDOW HEIGHT: {Console.WindowHeight}");
+
+                        Console.ResetColor();
+                        
                     }
                 }
             }
@@ -126,6 +156,7 @@ namespace TheGame
             myWorld.Draw();
             while (true)
             {
+                Console.CursorVisible = false;
                 if(HandlePlayerInput())
                 {
                     AdvancedPlayerDraw();
